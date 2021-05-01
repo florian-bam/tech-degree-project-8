@@ -341,6 +341,48 @@ template {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 40px;
+  margin: 50px;
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+header {
+  display: flex;
+}
+header div {
+  margin-left: auto;
+  padding: 20px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.avatar {
+  border-radius: 50%;
+  padding: 20px;
+}
+
+.text-container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 20px;
+}
+.text-container p {
+  margin: 5px 0;
+}
+
 body {
   position: relative;
 }

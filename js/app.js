@@ -4,11 +4,13 @@
 
 let employees = [];
 const urlAPI = `https://randomuser.me/api/?results=12&inc=name,picture,email,location,phone,dob&nat=us&noinfo`;
-// might have to turn gridContainer into querySelectorAll
 const gridContainer = document.querySelector('.grid-container');
 const overlay = document.querySelector('.overlay');
 const modalContainer = document.querySelector('.modal-content');
 const modalClose = document.querySelector('.modal-close');
+
+// Search Variables
+const search = document.querySelector('#searchbar');
 
 // ==============
 // Functions
@@ -89,6 +91,26 @@ function displayModal(index) {
     modalContainer.innerHTML = modalHTML;
 }
 
+// Search Functionality
+const handleSearch = event => {
+    const searchTerm = event.target.value.toLowerCase();
+    const boxTexts = document.querySelectorAll("a");
+    boxTexts.forEach(boxText => {
+      //get the value text of the attribute for the a elements (const boxTexts = document.querySelectorAll("a");)
+      const text = boxText.getAttribute('data-caption');
+      //variable that holds the a element that has data-caption text that is in the search 
+      const box = boxText;
+  
+  
+     // if(text.indexOf(searchTerm) > -1) {
+      if(text.includes(searchTerm)) {
+        box.style.display = "block";
+      } else {
+        box.style.display = "none";  
+      }
+    });
+};
+
 // ==============
 // APIs
 // ==============
@@ -120,3 +142,5 @@ gridContainer.addEventListener('click', e => {
 modalClose.addEventListener('click', () => {
     overlay.classList.add("hidden");
 });
+
+search.addEventListener('keyup', handleSearch);
