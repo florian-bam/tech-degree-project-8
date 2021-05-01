@@ -10,7 +10,7 @@ const modalContainer = document.querySelector('.modal-content');
 const modalClose = document.querySelector('.modal-close');
 
 // Search Variables
-const search = document.querySelector('#searchbar');
+let search = document.querySelector('.search');
 
 // ==============
 // Functions
@@ -92,24 +92,24 @@ function displayModal(index) {
 }
 
 // Search Functionality
-const handleSearch = event => {
-    const searchTerm = event.target.value.toLowerCase();
-    const boxTexts = document.querySelectorAll("a");
-    boxTexts.forEach(boxText => {
-      //get the value text of the attribute for the a elements (const boxTexts = document.querySelectorAll("a");)
-      const text = boxText.getAttribute('data-caption');
-      //variable that holds the a element that has data-caption text that is in the search 
-      const box = boxText;
+// const handleSearch = event => {
+//     const searchTerm = event.target.value.toLowerCase();
+//     const names = document.querySelectorAll("name");
+//     names.forEach(names => {
+//       //get the value text of the attribute for the a elements (const boxTexts = document.querySelectorAll("a");)
+//       const text = names.innerHTML;
+//       //variable that holds the a element that has data-caption text that is in the search 
+//       const box = names;
   
   
-     // if(text.indexOf(searchTerm) > -1) {
-      if(text.includes(searchTerm)) {
-        box.style.display = "block";
-      } else {
-        box.style.display = "none";  
-      }
-    });
-};
+//      // if(text.indexOf(searchTerm) > -1) {
+//       if(text.includes(searchTerm)) {
+//         box.style.display = "block";
+//       } else {
+//         box.style.display = "none";  
+//       }
+//     });
+// };
 
 // ==============
 // APIs
@@ -143,4 +143,16 @@ modalClose.addEventListener('click', () => {
     overlay.classList.add("hidden");
 });
 
-search.addEventListener('keyup', handleSearch);
+search.addEventListener('keyup', event => {
+    const searchTerm = event.target.value.toLowerCase();
+    const names = document.querySelectorAll("name");
+    names.forEach(names => {
+      const text = names.innerHTML;
+      const box = names;
+      if(text.includes(searchTerm)) {
+        box.style.display = "block";
+      } else {
+        box.style.display = "none";  
+      }
+    });
+});
