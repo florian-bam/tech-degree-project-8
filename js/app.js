@@ -8,6 +8,8 @@ const gridContainer = document.querySelector('.grid-container');
 const overlay = document.querySelector('.overlay');
 const modalContainer = document.querySelector('.modal-content');
 const modalClose = document.querySelector('.modal-close');
+const modalBack = document.querySelector('.modal-back');
+const modalForth = document.querySelector('.modal-forth');
 
 // Search Variables
 let search = document.querySelector('.search');
@@ -75,14 +77,14 @@ function displayModal(index) {
     let date = new Date(dob.date);
 
     const modalHTML = `
-        <img class="avatar" src="${picture.large}" alt="random image of person">
+        <img class="avatar" src="${picture.large}" alt="random image of person" data-index="${index}">
         <div class="text-container">
             <h2 class="name">${name.first} ${name.last}</h2>
             <p class="email">${email}</p>
             <p class="address">${city}</p>
             <hr>
             <p class="phone">${phone}</p>
-            <p class="address">${street}, ${state} ${postcode}</p>
+            <p class="address">${street.number} ${street.name}, ${state} ${postcode}</p>
             <p class="birthday">Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
         </div>
     `;
@@ -90,35 +92,6 @@ function displayModal(index) {
     overlay.classList.remove("hidden");
     modalContainer.innerHTML = modalHTML;
 }
-
-// Search Functionality
-// const handleSearch = event => {
-//     const searchTerm = event.target.value.toLowerCase();
-//     const names = document.querySelectorAll("name");
-//     names.forEach(names => {
-//       //get the value text of the attribute for the a elements (const boxTexts = document.querySelectorAll("a");)
-//       const text = names.innerHTML;
-//       //variable that holds the a element that has data-caption text that is in the search 
-//       const box = names;
-  
-  
-//      // if(text.indexOf(searchTerm) > -1) {
-//       if(text.includes(searchTerm)) {
-//         box.style.display = "block";
-//       } else {
-//         box.style.display = "none";  
-//       }
-//     });
-// };
-
-// ==============
-// APIs
-// ==============
-
-// fetch('https://randomuser.me/api/?results=12&inc=name,picture,email,location,phone,dob&nat=us&noinfo')
-//     .then(res => res.json)
-//     .then(res => console.log(res.results))
-//     .catch(err => console.log(err))
 
 useFetch(urlAPI)
     .then(res => res.results)
@@ -143,14 +116,35 @@ modalClose.addEventListener('click', () => {
     overlay.classList.add("hidden");
 });
 
+// Modal go back
+modalBack.addEventListener('click', e => {
+    const img = e.target.parentNode.lastElementChild.firstElementChild;
+    const currentIndex = img.getAttribute('data-index');    
+    const newIndex = parseInt(currentIndex) - 1;
+    overlay.classList.add("hidden");
+    displayModal(newIndex);
+});
+
+// Modal go forth
+modalForth.addEventListener('click', e => {
+    const img = e.target.parentNode.lastElementChild.firstElementChild;
+    const currentIndex = img.getAttribute('data-index');    
+    const newIndex = parseInt(currentIndex) + 1;
+    overlay.classList.add("hidden");
+    displayModal(newIndex);
+});
+
+// Search functionality
 search.addEventListener('keyup', event => {
     const searchTerm = event.target.value.toLowerCase();
-    const names = document.querySelectorAll("name");
-    names.forEach(names => {
-      const text = names.innerHTML;
-      const box = names;
+    const names = document.querySelectorAll(".text-container>.name");
+    console.log(names);
+    names.forEach(name => {
+      const text = name.innerHTML.toLowerCase();
+      console.log(text);
+      const box = name.parentNode.parentNode;
       if(text.includes(searchTerm)) {
-        box.style.display = "block";
+        box.style.display = "";
       } else {
         box.style.display = "none";  
       }
